@@ -4,8 +4,9 @@ import LocationList from './location/LocationList'
 import AnimalList from './animal/AnimalList'
 import EmployeeList from './employee/EmployeeList'
 
+const url = "http://localhost:5002/"
 
-class ApplicationViews extends Component {
+export default class ApplicationViews extends Component {
     state = {
         employees: [],
         locations: [],
@@ -15,7 +16,7 @@ class ApplicationViews extends Component {
     componentDidMount(){
       const newState = {}
 
-    fetch("http://localhost:5002/animals")
+      fetch(`${url}animals`)
         .then(r => r.json())
         .then(animals => newState.animals = animals)
         .then(() => fetch("http://localhost:5002/employees")
@@ -41,5 +42,3 @@ class ApplicationViews extends Component {
         )
     }
 }
-
-export default ApplicationViews
