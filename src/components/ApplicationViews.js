@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import React, { Component } from "react"
 import { withRouter } from 'react-router'
 import LocationList from './location/LocationList'
@@ -6,6 +6,7 @@ import AnimalList from './animal/AnimalList'
 import EmployeeList from './employee/EmployeeList'
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
+import Login from './authentication/Login'
 import AnimalManager from "../modules/AnimalManager"
 
 class ApplicationViews extends Component {
@@ -25,6 +26,9 @@ class ApplicationViews extends Component {
         .then(employees => newState.employees = employees)
         .then(() => this.setState(newState))
     }
+
+    // Check if credentials are in local storage
+    isAuthenticated = () => sessionStorage.getItem("credentials") !== null
 
     deleteAnimal = (id) => {
       return fetch(`http://localhost:5002/animals/${id}`, {
@@ -76,8 +80,14 @@ class ApplicationViews extends Component {
                 employees={this.state.employees} />
             }} />
             <Route path="/employees" render={(props) => {
-                return <EmployeeList employees={this.state.employees} />
+                if (this.isAuthenticated()) {
+                  return <EmployeeList deleteEmployee={this.deleteEmployee}
+                  employees={this.state.employees} />
+                } else {
+                    return <Redirect to="/login" />
+                }
             }} />
+            <Route path="/login" component={Login} />
           </React.Fragment>
         )
     }
