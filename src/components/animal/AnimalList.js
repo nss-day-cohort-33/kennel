@@ -17,9 +17,9 @@ export default class AnimalList extends Component {
         </div>
         <section className="animals">
         {
-          this.props.animals.map(animal =>
-            <AnimalCard key={animal.id} animal={animal} {...this.props} />
-          )
+          this.props.animals.map(animal => {
+            return <AnimalCard key={animal.id} animal={animal} {...this.props} />
+        })
         }
         </section>
       </React.Fragment>

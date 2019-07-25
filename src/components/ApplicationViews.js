@@ -7,6 +7,7 @@ import EmployeeList from './employee/EmployeeList'
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
 import Login from './authentication/Login'
+import AnimalEditForm from './animal/AnimalEditForm'
 import AnimalManager from "../modules/AnimalManager"
 
 class ApplicationViews extends Component {
@@ -51,6 +52,16 @@ class ApplicationViews extends Component {
         })
       );
 
+    updateAnimal = (editedAnimalObject) => {
+      return AnimalManager.put(editedAnimalObject)
+      .then(() => AnimalManager.getAll())
+      .then(animals => {
+        this.setState({
+          animals: animals
+        })
+      });
+    };
+
     render() {
       console.log("Component was rendered");
         return (
@@ -61,7 +72,7 @@ class ApplicationViews extends Component {
             <Route exact path="/animals" render={(props) => {
                 return <AnimalList {...props} deleteAnimal={this.deleteAnimal} animals={this.state.animals} />
             }} />
-            <Route path="/animals/:taco(\d+)" render={(props) => {
+            <Route exact path="/animals/:taco(\d+)" render={(props) => {
               // Find the animal with the id of the route parameter
               let animal = this.state.animals.find(animal =>
                   animal.id === parseInt(props.match.params.taco)
@@ -73,6 +84,11 @@ class ApplicationViews extends Component {
 
               return <AnimalDetail dischargeAnimal={this.deleteAnimal} animal={animal} />
             }} />
+            <Route
+              path="/animals/:animalId(\d+)/edit" render={props => {
+                return <AnimalEditForm {...props} employees={this.state.employees} updateAnimal={this.updateAnimal}/>
+              }}
+            />
             <Route path="/animals/new" render={(props) => {
               return <AnimalForm
                 {...props}
@@ -85,6 +101,7 @@ class ApplicationViews extends Component {
                     deleteEmployee={this.deleteEmployee}
                     employees={this.state.employees}
                     animals={this.state.animals}
+                    {...props}
                   />
                 } else {
                     return <Redirect to="/login" />

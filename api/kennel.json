@@ -36,27 +36,32 @@
     },
     {
       "id": 3,
-      "name": "Angus"
+      "name": "Angus",
+      "breed": "Border Collie",
+      "employeeId": 2
     },
     {
       "id": 4,
-      "name": "Henley"
+      "name": "Henley",
+      "breed": "chow chow chow chowie",
+      "employeeId": 1
     },
     {
       "id": 6,
       "name": "Checkers"
     },
     {
+      "id": 7,
       "name": "Murph",
       "breed": "Aussie Mix",
-      "employeeId": 3,
-      "id": 7
+      "employeeId": 2
     },
     {
       "name": "Foxy",
       "breed": "Golden Chow",
       "employeeId": 4,
-      "id": 8
+      "id": 8,
+      "timestamp": ""
     }
   ]
 }
